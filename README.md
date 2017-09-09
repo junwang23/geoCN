@@ -1,24 +1,13 @@
-# geocncities
-China city-level map in geojson format including all city administrative level areas. Islands of South China Sea are not included currently but will be added in future.
-The Taiwan province is not divided into counties, but very detailed geo-information can be found at [twgeojson](https://github.com/g0v/twgeojson).
+# geoCN
 
-The geojson files of the provinces as well as a province-level map are fetched from [china-geojson](https://github.com/antvis/china-geojson)
+Geographic data of China visualized with geojson maps.
 
-## Install
+### Map
 
-#### Method 1
-Simply download/copy the china_city.json file at the root directory.
+Two maps are included in the ```geojson``` folder, one is the province level map and the other is the city level map.
 
-#### Method 2
-Building the map from source requires node.js and node packages of fs and geojson-merge.
+### Data Files
 
-```$ npm install``` at the root directory and then ```$ node build.js``` to generate the geojson file.
+Two data files are in the ```data``` folder. Currently there is only province level population data. More data in both levels can be added. The ```id``` field of each data file matches the ```properties:id``` field of each feature in the correponding map.
 
-## Demo Image
-
-Run the index html page with any web server (e.g. [jekyll](http://jekyllrb.com/)), a leaflet demo should be shown as follows.
-
-![](demo.png)
-
-
-
+A simple Python script (```link.py```) is given here to link the data with the map. Please change the value of the variables in the beginning of the script to select the files and data attributes.

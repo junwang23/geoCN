@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+    <svg width="960" height="500"></svg>
+
+    <style>
+        .background {
+            fill: #eee;
+        }
+        
+        tspan.name {
+            font-family: "Lato";
+            font-size: 2rem;
+            font-weight: 400;
+        }
+        
+        tspan.info {
+            font-family: "Lato";
+            font-size: 1rem;
+            font-weight: 200;
+        }
+        
+        .map-layer {
+            fill: #fff;
+            stroke: #aaa;
+        }
+    </style>
+
+    <script src="//d3js.org/d3.v4.min.js"></script>
+    <script>
+        var width = 960,
+            height = 500,
+            color = d3.scaleLinear().range(["#feedde", "#8c2d04"]);
+
+        var svg = d3.select("svg");
+        svg.append("rect")
+            .attr("class", "background")
+            .attr("width", width)
+            .attr("height", height);
+
+        var bigText = svg.append("text").attr("transform", "translate(10, 470)"),
+            mapLayer = svg.append("g").attr("class", "map-layer"),
+            mapLayerData;
+
+        d3.json("china_geo.json", function(error, geo) {
+
+            var dom = d3.extent(geo.features, d => d.properties.Population2010);
+            color.domain(dom);
+
+            var projection = d3.geoMercator().fitSize([width, height], geo),
+                path = d3.geoPath().projection(projection);
+
+            mapLayerData = mapLayer.selectAll("path")
+                .data(geo.features, d => d.properties.id);
+
+            mapLayerData.enter().append("path")
+                .attr("d", path)
+                .attr("vector-effect", "non-scaling-stroke")
+                .style("fill", d => color(d.properties.Population2010))
+                .on("mouseover", mouseover)
+                .on("mouseout", mouseout);
+        });
+
+        function mouseover(d) {
+            d3.select(this).style("fill", "orange");
+            bigText.append("tspan")
+                .attr("class", "name")
+                .attr("x", 0)
+                .text(d.properties.name)
+            bigText.append("tspan")
+                .attr("class", "info")
+                .attr("x", 0)
+                .attr("dy", "1.2em")
+                .text("Population: " + d.properties.Population2010.toLocaleString());
+        }
+
+        function mouseout(d) {
+            d3.select(this)
+                .style("fill", d => color(d.properties.Population2010));
+            bigText.html("");
+        }
+    </script>
+</body>
+
+</html>
