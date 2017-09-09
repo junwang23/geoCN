@@ -49,9 +49,9 @@
             mapLayer = svg.append("g").attr("class", "map-layer"),
             mapLayerData;
 
-        d3.json("china_geo.json", function(error, geo) {
+        d3.json("geojson/china_population.json", function(error, geo) {
 
-            var dom = d3.extent(geo.features, d => d.properties.Population2010);
+            var dom = d3.extent(geo.features, d => d.properties.population2010);
             color.domain(dom);
 
             var projection = d3.geoMercator().fitSize([width, height], geo),
@@ -63,7 +63,7 @@
             mapLayerData.enter().append("path")
                 .attr("d", path)
                 .attr("vector-effect", "non-scaling-stroke")
-                .style("fill", d => color(d.properties.Population2010))
+                .style("fill", d => color(d.properties.population2010))
                 .on("mouseover", mouseover)
                 .on("mouseout", mouseout);
         });
@@ -78,12 +78,12 @@
                 .attr("class", "info")
                 .attr("x", 0)
                 .attr("dy", "1.2em")
-                .text("Population: " + d.properties.Population2010.toLocaleString());
+                .text("Population: " + d.properties.population2010.toLocaleString());
         }
 
         function mouseout(d) {
             d3.select(this)
-                .style("fill", d => color(d.properties.Population2010));
+                .style("fill", d => color(d.properties.population2010));
             bigText.html("");
         }
     </script>

@@ -4,11 +4,11 @@ import json
 import codecs
 
 
-data_file = 'data/data.csv'
+data_file = 'data/data_provinces.csv'
 map_json = 'geojson/china_provinces.json'
-output = 'china_geo.json'
+output = 'geojson/china_population.json'
 
-attributes = ['Population2010']
+attributes = ['population2010']
 
 
 class MyEncoder(json.JSONEncoder):
@@ -30,7 +30,7 @@ f = codecs.open(map_json, 'r', 'utf-8')
 geo = json.load(f)
 
 for g in geo['features']:
-    match = df[df['ID'] == g['properties']['id']]
+    match = df[df['id'] == g['properties']['id']]
     for attr in attributes:
         g['properties'][attr] = match[attr].iloc[0]
     print(g['properties'])
