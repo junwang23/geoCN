@@ -4,7 +4,7 @@ Geographic data of China visualized with geojson maps.
 
 ### Map
 
-Two maps are included in the ```geojson``` folder, one is the province level map and the other is the city level map.
+Maps are in the ```geojson``` folder. Besides the province level and the city level map, there is also a province level map, output form the ```link.py```, associated with population data.
 
 ### Data Files
 

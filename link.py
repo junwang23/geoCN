@@ -8,7 +8,7 @@ data_file = 'data/data_provinces.csv'
 map_json = 'geojson/china_provinces.json'
 output = 'geojson/china_population.json'
 
-attributes = ['population2010']
+attributes = ['population2010', 'density']
 
 
 class MyEncoder(json.JSONEncoder):
